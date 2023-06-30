@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+
+                <form method="POST" class="card card-body bg-success">
+
+
+                    {% csrf_token %}
+                    {{ error }}
+
+                    <h5 class="text-center">Actualiza tus Tareas</h5>
+                    <h1 class="text-white text-center">
+                        <u>{{ task.title }}</u>
+                    </h1>
+                    {{ form.as_p }}
+
+                    <div class="d-flex" style="justify-content: center;">
+                        <button class="btn btn-primary" style="margin: 5px">
+                            Actualizar
+                        </button>
+
+
+                    </form>
+
+
+                    <form method="POST" action="{% url 'complete_task' task.id %}">
+                        {% csrf_token %}
+
+                        <button class="btn btn-warning" style="margin: 5px">
+                            Completar
+                        </button>
+                    </form>
+
+
+                    <form method="POST" action="{% url 'delete_task' task.id %}">
+                        {% csrf_token %}
+
+                        <button class="btn btn-danger" style="margin: 5px">
+                            Eliminar
+                        </button>
+                    </form>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </main>
+
+
+{% endblock %}

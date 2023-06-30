@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+
+
+                {% if request.path == '/tasks/' %}
+                    
+                <h2 class="text-center display-4">Tareas pendientes</h2>
+                <p class="text-center">Presiona sobre ellas para actualizarlas/completarlas</p>
+                {% elif request.path == '/tasks_completed/' %}
+                <h2 class="text-center display-4">Tareas completadas</h2>
+                    
+                {% endif %}
+
+                
+
+               {% if tasks %}
+                <ul class="list-group">
+                    {% for task in tasks %}
+
+                        <a class="list-group-item" href="{% url 'task_detail' task.id %}">
+
+                            
+
+                            <header class="d-flex justify-content-between">
+
+                                {% if request.path == '/tasks/' %}
+                                <h3 class="fw-bold text-danger">{{ task.title }}</h3>
+                                {% else %}
+                                <h3 class="fw-bold text-success">{{ task.title }}</h3>
+                                {% endif %}
+
+
+                                <p>{{ task.user.username }}</p>
+
+                            </header>
+
+
+                            <p>{{ task.description }}</p>
+
+                            <p>{{ task.datecompleted|date:'M j Y' }}</p>
+                            <hr></a>
+                        {% endfor %}
+                    </ul>
+
+                    {% elif request.path == '/tasks_completed/' %}
+                    <h2 class="text-center">No hay Tareas completadas! ⚠️</h2>
+
+                    {% else %}
+                    
+
+                        <h2 class="text-center">No hay Tareas creadas! ⚠️</h2>
+                    <a href="/tasks/create/"> <h5 class="text-center">Crea nuevas tareas</h5></a>
+
+                    
+                    
+
+                    
+                    
+                    {% endif %}
+                </div>
+            </div>
+        </main>
+    {% endblock %}
